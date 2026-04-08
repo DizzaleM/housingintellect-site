@@ -816,9 +816,9 @@ async function submitPilotForm(){
   const btn=document.querySelector(".pf-submit");
   btn.textContent="Sending...";btn.disabled=true;
   try{
-    const res=await fetch("/api/pilot-interest",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name,email,phone,size,programs})});
+    const res=await fetch("https://formspree.io/f/xnjorjwa",{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({name,email,phone,"portfolio_size":size,"programs":programs.join(", ")||"Not specified"})});
     if(res.ok){document.getElementById("pilotForm").style.display="none";document.getElementById("pilotSuccess").style.display="block";}
-    else{const d=await res.json();errEl.textContent=d.error||"Something went wrong. Please email dtanner@housingintellect.io directly.";errEl.style.display="block";btn.textContent="Request Pilot Access";btn.disabled=false;}
+    else{errEl.textContent="Something went wrong. Please email dtanner@housingintellect.io directly.";errEl.style.display="block";btn.textContent="Request Pilot Access";btn.disabled=false;}
   }catch(e){errEl.textContent="Network error. Please email dtanner@housingintellect.io directly.";errEl.style.display="block";btn.textContent="Request Pilot Access";btn.disabled=false;}
 }
 function showInvestors(){document.getElementById("mainContent").classList.add("hidden");document.getElementById("investorPage").classList.add("active");window.scrollTo({top:0,behavior:"smooth"})}
